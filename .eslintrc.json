@@ -1,0 +1,18 @@
+{
+  "parser": "babel-eslint",
+  "env": {
+    "node": true,
+    "amd": true,
+    "es6": true,
+    "mocha": true
+  },
+  "extends": ["eslint:recommended"],
+  "rules": {
+    "quotes": ["warn", "double"],
+    "semi": ["warn", "never"],
+    "valid-jsdoc": ["error"],
+    "no-console": ["warn"],
+    "max-len": ["warn", { "code": 90, "ignoreStrings": true }],
+    "no-unused-vars": ["error", { "args": "none" }]
+  }
+}
