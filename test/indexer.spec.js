@@ -27,4 +27,15 @@ describe("Indexer Tests", () => {
     expect(d[1].name).to.equal("d2.json")
     done()
   })
+
+  it("Should ignore folders that begin with a dot", done => {
+    expect(!fs.existsSync("test/testFolder/.shouldIgnore/index.json"))
+    done()
+  })
+
+  it("Should ignore files that start with a dot", done => {
+    const c = JSON.parse(fs.readFileSync("test/testFolder/b/c/index.json"))
+    expect(c.length).to.equal(2)
+    done()
+  })
 })

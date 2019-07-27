@@ -21,11 +21,11 @@ const dirTree = folderName => {
 
   fs.readdirSync(folderName).map(fileName => {
     const file = getFileDetails(`${folderName}/${fileName}`)
-    if (file.name !== "index.json") {
+    if (file.name !== "index.json" && file.name[0] !== ".") {
       index.push(file)
-    }
-    if (file.type === "folder") {
-      dirTree(file.path)
+      if (file.type === "folder") {
+        dirTree(file.path)
+      }
     }
   })
 
