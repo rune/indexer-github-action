@@ -1,6 +1,6 @@
 FROM node:10-alpine
 
-apk add git
+RUN apk add git
 
 COPY ./src /
 
