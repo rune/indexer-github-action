@@ -1,5 +1,5 @@
 FROM node:10-alpine
 
-COPY .. /
+COPY ./src /
 
-ENTRYPOINT [ "/.github/src/entrypoint.sh" ]
+ENTRYPOINT [ "/entrypoint.sh" ]

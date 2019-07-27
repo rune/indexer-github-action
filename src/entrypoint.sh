@@ -1,6 +1,4 @@
 #!/bin/sh -l
 
-cd /.github
 npm ci
-
-node src.index.js /
+node index.js /github/workspace
