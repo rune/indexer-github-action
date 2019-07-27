@@ -25,8 +25,9 @@
   "homepage": "https://github.com/rune/indexer-github-action#readme",
   "devDependencies": {
     "babel-eslint": "10.0.2",
+    "chai": "^4.2.0",
+    "fs-extra": "^8.1.0",
     "mocha": "6.2.0",
-    "ncp": "^2.0.0",
     "prettier-eslint": "9.0.0"
   }
 }

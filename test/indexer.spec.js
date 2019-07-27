@@ -1,25 +1,30 @@
 const indexer = require("../src/index.js")
-const ncp = require("ncp").ncp
+const fs = require("fs-extra")
+const expect = require("chai").expect
 
 describe("Indexer Tests", () => {
   before(done => {
     console.log("Resetting 'testFolder' to 'templateFolder'")
-    ncp("test/templateFolder", "test/testFolder", err => {
-      if (err) {
-        console.log("Error setting up folders to run tests!")
-        console.error(err)
-      } else {
-        indexer("test/testFolder")
-        done()
-      }
-    })
+    try {
+      fs.copySync("test/templateFolder", "test/testFolder")
+      indexer("test/testFolder")
+      done()
+    } catch (err) {
+      throw err
+    }
   })
 
-  it("Should create three index.json files", done => {
+  it("Should create 4 index.json files", done => {
+    expect(fs.existsSync("test/testFolder/index.json"))
+    expect(fs.existsSync("test/testFolder/b/index.json"))
+    expect(fs.existsSync("test/testFolder/b/c/index.json"))
+    expect(fs.existsSync("test/testFolder/b/d/index.json"))
     done()
   })
 
   it("Should create JSON files with the correct filenames", done => {
+    const d = JSON.parse(fs.readFileSync("test/testFolder/b/d/index.json"))
+    expect(d[1].name).to.equal("d2.json")
     done()
   })
 })
