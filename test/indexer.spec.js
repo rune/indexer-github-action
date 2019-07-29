@@ -6,6 +6,7 @@ describe("Indexer Tests", () => {
   before(done => {
     console.log("Resetting 'testFolder' to 'templateFolder'")
     try {
+      fs.emptyDirSync("test/testFolder")
       fs.copySync("test/templateFolder", "test/testFolder")
       indexer("test/testFolder")
       done()

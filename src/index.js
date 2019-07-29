@@ -4,7 +4,6 @@ const path = require("path")
 const getFileDetails = fileName => {
   const stats = fs.lstatSync(fileName)
   return {
-    path: fileName,
     name: path.basename(fileName),
     type: stats.isDirectory() ? "folder" : "file"
   }
@@ -24,7 +23,7 @@ const dirTree = folderName => {
     if (file.name !== "index.json" && file.name[0] !== ".") {
       index.push(file)
       if (file.type === "folder") {
-        dirTree(file.path)
+        dirTree(`${folderName}/${fileName}`)
       }
     }
   })
