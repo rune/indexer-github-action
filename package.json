@@ -24,11 +24,11 @@
   },
   "homepage": "https://github.com/rune/indexer-github-action#readme",
   "devDependencies": {
-    "babel-eslint": "10.0.2",
+    "babel-eslint": "^10.0.3",
     "chai": "^4.2.0",
     "fs-extra": "^8.1.0",
-    "mocha": "6.2.0",
-    "prettier-eslint": "9.0.0"
+    "mocha": "^6.2.1",
+    "prettier-eslint": "^9.0.0"
   },
   "dependencies": {
     "js-yaml": "^3.13.1"
