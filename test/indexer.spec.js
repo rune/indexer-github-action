@@ -39,4 +39,12 @@ describe("Indexer Tests", () => {
     expect(c.length).to.equal(2)
     done()
   })
+
+  it("Should ignore deprecated files and folders", done => {
+    const a = JSON.parse(fs.readFileSync("test/testFolder/index.json"))
+    expect(a.length).to.equal(4)
+    const y = JSON.parse(fs.readFileSync("test/testFolder/y/index.json"))
+    expect(y.length).to.equal(1)
+    done()
+  })
 })

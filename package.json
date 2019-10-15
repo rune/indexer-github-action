@@ -29,5 +29,8 @@
     "fs-extra": "^8.1.0",
     "mocha": "6.2.0",
     "prettier-eslint": "9.0.0"
+  },
+  "dependencies": {
+    "js-yaml": "^3.13.1"
   }
 }
