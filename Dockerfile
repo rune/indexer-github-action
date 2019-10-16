@@ -2,8 +2,8 @@ FROM node:10-alpine
 
 RUN apk add git
 
-COPY ./src /
+COPY . /
 
 RUN npm install
 
-ENTRYPOINT [ "/entrypoint.sh" ]
+ENTRYPOINT [ "/src/entrypoint.sh" ]
