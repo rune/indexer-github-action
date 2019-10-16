@@ -1,7 +1,7 @@
 #!/bin/sh -l
 
 # Generate indices
-cd /
+cd /src
 node index.js $GITHUB_WORKSPACE
 
 # Commit and push generated indices
