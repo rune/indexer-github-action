@@ -4,6 +4,6 @@ RUN apk add git
 
 COPY . /
 
-RUN npm install
+RUN npm install --production
 
 ENTRYPOINT [ "/src/entrypoint.sh" ]
