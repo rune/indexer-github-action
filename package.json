@@ -28,6 +28,7 @@
     "chai": "^4.2.0",
     "fs-extra": "^8.1.0",
     "mocha": "^6.2.1",
+    "prettier": "^1.19.1",
     "prettier-eslint": "^9.0.0"
   },
   "dependencies": {
