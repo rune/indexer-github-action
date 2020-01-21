@@ -6,9 +6,21 @@ const configFileName = ".indexer.yaml"
 
 const getFileDetails = fileName => {
   const stats = fs.lstatSync(fileName)
+  const name = path.basename(fileName)
+  const parsedName = name && name.split(".")
+  let tags = {}
+  for (const potentialTag of parsedName) {
+    const parsedTag = potentialTag.split("-")
+    // If potential tag element contains exactly one hyphen, then it's a tag
+    if (parsedTag.length === 2) {
+      tags[parsedTag[0]] = parsedTag[1]
+    }
+  }
+
   return {
-    name: path.basename(fileName),
-    type: stats.isDirectory() ? "folder" : "file"
+    name,
+    type: stats.isDirectory() ? "folder" : "file",
+    tags
   }
 }
 
@@ -47,9 +59,14 @@ const dirTree = folderName => {
     }
   })
 
-  fs.writeFile(`${folderName}/index.json`, JSON.stringify(index, null, 2), "utf8", () => {
-    console.log(`Index written for ${folderName}`)
-  })
+  fs.writeFile(
+    `${folderName}/index.json`,
+    JSON.stringify(index, null, 2),
+    "utf8",
+    () => {
+      console.log(`Index written for ${folderName}`)
+    }
+  )
 
   return index
 }

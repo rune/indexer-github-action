@@ -42,9 +42,15 @@ describe("Indexer Tests", () => {
 
   it("Should ignore deprecated files and folders", done => {
     const a = JSON.parse(fs.readFileSync("test/testFolder/index.json"))
-    expect(a.length).to.equal(4)
+    expect(a.length).to.equal(5)
     const y = JSON.parse(fs.readFileSync("test/testFolder/y/index.json"))
     expect(y.length).to.equal(1)
+    done()
+  })
+
+  it("Should parse tags in filenames", done => {
+    const a = JSON.parse(fs.readFileSync("test/testFolder/index.json"))
+    expect(a[3].tags.tagKey).to.equal("tagValue")
     done()
   })
 })
