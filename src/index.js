@@ -6,21 +6,18 @@ const configFileName = ".indexer.yaml"
 
 const insertSuffix = (string, suffix) => {
   const indexOfDotBeforeFileExtension = string.lastIndexOf(".")
-  return `${string.slice(0, indexOfDotBeforeFileExtension)}${suffix}${string.slice(
-    indexOfDotBeforeFileExtension,
-    string.length
-  )}`
+  return `${string.slice(
+    0,
+    indexOfDotBeforeFileExtension
+  )}${suffix}${string.slice(indexOfDotBeforeFileExtension, string.length)}`
 }
 
-const getExtension = (string) => {
+const getExtension = string => {
   const indexOfDotBeforeFileExtension = string.lastIndexOf(".")
   if (indexOfDotBeforeFileExtension < 0) {
     return "none"
   }
-  return string.slice(
-    indexOfDotBeforeFileExtension + 1,
-    string.length
-  )
+  return string.slice(indexOfDotBeforeFileExtension + 1, string.length)
 }
 
 const getFileDetails = fileName => {
@@ -50,10 +47,12 @@ const getFileDetails = fileName => {
   const fileExtension = getExtension(name)
   if (fileExtension === "jpg" || fileExtension === "png") {
     if (!fs.existsSync(insertSuffix(fileName, ".2x"))) {
-      throw {msg: "2x image not present", fileName: fileName}
+      console.log("2x image not present", fileName)
+      throw { msg: "2x image not present", fileName }
     }
     if (!fs.existsSync(insertSuffix(fileName, ".3x"))) {
-      throw {msg: "3x image not present", fileName: fileName}
+      console.log("2x image not present", fileName)
+      throw { msg: "3x image not present", fileName }
     }
   }
 
