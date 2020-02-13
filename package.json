@@ -1,6 +1,6 @@
 {
   "name": "indexer-github-action",
-  "version": "0.21.0",
+  "version": "0.22.0",
   "description": "Github action to automatically dump an index.json in every folder of a repository that lists all files inside it",
   "main": "generateIndices.js",
   "scripts": {
