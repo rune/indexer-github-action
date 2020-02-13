@@ -88,13 +88,15 @@ const dirTree = folderName => {
   }
 
   fs.readdirSync(folderName).map(fileName => {
-    const file = getFileDetails(`${folderName}/${fileName}`)
     const isDeprecatedFile = deprecatedFiles.indexOf(`${fileName}`) >= 0
-    const isIgnoredFile = file.name === "index.json" || file.name[0] === "." || file.isResponsive
+    const isIgnoredFile = fileName === "index.json" || fileName[0] === "."
     if (!isIgnoredFile && !isDeprecatedFile) {
-      index.push(file)
-      if (file.type === "folder") {
-        dirTree(`${folderName}/${fileName}`, deprecatedFiles)
+      const file = getFileDetails(`${folderName}/${fileName}`)
+      if (!file.isResponsive) {
+        index.push(file)
+        if (file.type === "folder") {
+          dirTree(`${folderName}/${fileName}`, deprecatedFiles)
+        }
       }
     }
   })
