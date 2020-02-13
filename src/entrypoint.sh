@@ -1,5 +1,8 @@
 #!/bin/sh -l
 
+# Ensure the process fails if any subcommand fails
+set -e
+
 # Generate indices
 cd /src
 node index.js $GITHUB_WORKSPACE
