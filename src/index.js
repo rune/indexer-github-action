@@ -4,16 +4,58 @@ const yaml = require("js-yaml")
 
 const configFileName = ".indexer.yaml"
 
+const insertSuffix = (string, suffix) => {
+  const indexOfDotBeforeFileExtension = string.lastIndexOf(".")
+  return `${string.slice(0, indexOfDotBeforeFileExtension)}${suffix}${string.slice(
+    indexOfDotBeforeFileExtension,
+    string.length
+  )}`
+}
+
+const getExtension = (string) => {
+  const indexOfDotBeforeFileExtension = string.lastIndexOf(".")
+  if (indexOfDotBeforeFileExtension < 0) {
+    return "none"
+  }
+  return string.slice(
+    indexOfDotBeforeFileExtension + 1,
+    string.length
+  )
+}
+
 const getFileDetails = fileName => {
   const stats = fs.lstatSync(fileName)
   const name = path.basename(fileName)
   const parsedName = name && name.split(".")
   let tags = {}
+  // Skip 2x and 3x versions of images
+  if (parsedName.length >= 3) {
+    const suffix = parsedName[parsedName.length - 2]
+    if (suffix === "2x" || suffix === "3x") {
+      return {
+        name,
+        isResponsive: true
+      }
+    }
+  }
   for (const potentialTag of parsedName) {
     const parsedTag = potentialTag.split("-")
     // If potential tag element contains exactly one hyphen, then it's a tag
     if (parsedTag.length === 2) {
       tags[parsedTag[0]] = parsedTag[1]
+    }
+  }
+
+  // Check if this is an image and then confirm that the 2x and 3x versions exist
+  const fileExtension = getExtension(name)
+  console.log(fileExtension)
+  if (fileExtension === "jpg" || fileExtension === "png") {
+    console.log(fileName)
+    if (!fs.existsSync(insertSuffix(fileName, ".2x"))) {
+      throw {msg: "2x image not present", fileName}
+    }
+    if (!fs.existsSync(insertSuffix(fileName, ".3x"))) {
+      throw {msg: "3x image not present", fileName} 
     }
   }
 
@@ -50,7 +92,7 @@ const dirTree = folderName => {
   fs.readdirSync(folderName).map(fileName => {
     const file = getFileDetails(`${folderName}/${fileName}`)
     const isDeprecatedFile = deprecatedFiles.indexOf(`${fileName}`) >= 0
-    const isIgnoredFile = file.name === "index.json" || file.name[0] === "."
+    const isIgnoredFile = file.name === "index.json" || file.name[0] === "." || file.isResponsive
     if (!isIgnoredFile && !isDeprecatedFile) {
       index.push(file)
       if (file.type === "folder") {
