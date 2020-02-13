@@ -48,9 +48,7 @@ const getFileDetails = fileName => {
 
   // Check if this is an image and then confirm that the 2x and 3x versions exist
   const fileExtension = getExtension(name)
-  console.log(fileExtension)
   if (fileExtension === "jpg" || fileExtension === "png") {
-    console.log(fileName)
     if (!fs.existsSync(insertSuffix(fileName, ".2x"))) {
       throw {msg: "2x image not present", fileName}
     }
