@@ -50,10 +50,10 @@ const getFileDetails = fileName => {
   const fileExtension = getExtension(name)
   if (fileExtension === "jpg" || fileExtension === "png") {
     if (!fs.existsSync(insertSuffix(fileName, ".2x"))) {
-      throw {msg: "2x image not present", fileName}
+      throw {msg: "2x image not present", fileName: fileName}
     }
     if (!fs.existsSync(insertSuffix(fileName, ".3x"))) {
-      throw {msg: "3x image not present", fileName} 
+      throw {msg: "3x image not present", fileName: fileName}
     }
   }
 
