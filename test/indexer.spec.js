@@ -11,15 +11,17 @@ describe("Indexer Tests", () => {
       indexer("test/testFolder")
       done()
     } catch (err) {
+      console.log(err)
       throw err
     }
   })
 
-  it("Should create 4 index.json files", done => {
+  it("Should create 5 index.json files", done => {
     expect(fs.existsSync("test/testFolder/index.json"))
     expect(fs.existsSync("test/testFolder/b/index.json"))
     expect(fs.existsSync("test/testFolder/b/c/index.json"))
     expect(fs.existsSync("test/testFolder/b/d/index.json"))
+    expect(fs.existsSync("test/testFolder/img/index.json"))
     done()
   })
 
@@ -42,7 +44,7 @@ describe("Indexer Tests", () => {
 
   it("Should ignore deprecated files and folders", done => {
     const a = JSON.parse(fs.readFileSync("test/testFolder/index.json"))
-    expect(a.length).to.equal(5)
+    expect(a.length).to.equal(6)
     const y = JSON.parse(fs.readFileSync("test/testFolder/y/index.json"))
     expect(y.length).to.equal(1)
     done()
@@ -50,7 +52,24 @@ describe("Indexer Tests", () => {
 
   it("Should parse tags in filenames", done => {
     const a = JSON.parse(fs.readFileSync("test/testFolder/index.json"))
-    expect(a[3].tags.tagKey).to.equal("tagValue")
+    expect(a[4].tags.tagKey).to.equal("tagValue")
     done()
+  })
+
+  it("Should ignore responsive 2x and 3x images", done => {
+    const img = JSON.parse(fs.readFileSync("test/testFolder/img/index.json"))
+    expect(img.length).to.equal(2)
+    done()
+  })
+
+  it("Should throw if responsive images are not present", done => {
+    try {
+      fs.emptyDirSync("test/testFolder2")
+      fs.copySync("test/templateFolder2", "test/testFolder2")
+      indexer("test/testFolder2")
+    } catch (err) {
+      expect(err.msg).to.contain("2x image not present")
+      done()
+    }
   })
 })
