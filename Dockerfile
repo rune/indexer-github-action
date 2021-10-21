@@ -4,6 +4,6 @@ RUN apk add git
 
 COPY . /
 
-RUN yarn
+RUN yarn --production
 
 ENTRYPOINT [ "/src/entrypoint.sh" ]
