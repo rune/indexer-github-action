@@ -12,7 +12,7 @@ const insertSuffix = (string, suffix) => {
   )}${suffix}${string.slice(indexOfDotBeforeFileExtension, string.length)}`
 }
 
-const getExtension = string => {
+const getExtension = (string) => {
   const indexOfDotBeforeFileExtension = string.lastIndexOf(".")
   if (indexOfDotBeforeFileExtension < 0) {
     return "none"
@@ -20,7 +20,7 @@ const getExtension = string => {
   return string.slice(indexOfDotBeforeFileExtension + 1, string.length)
 }
 
-const getFileDetails = fileName => {
+const getFileDetails = (fileName) => {
   const stats = fs.lstatSync(fileName)
   const name = path.basename(fileName)
   const parsedName = name && name.split(".")
@@ -31,7 +31,7 @@ const getFileDetails = fileName => {
     if (suffix === "2x" || suffix === "3x") {
       return {
         name,
-        isResponsive: true
+        isResponsive: true,
       }
     }
   }
@@ -59,11 +59,11 @@ const getFileDetails = fileName => {
   return {
     name,
     type: stats.isDirectory() ? "folder" : "file",
-    tags
+    tags,
   }
 }
 
-const dirTree = folderName => {
+const dirTree = (folderName) => {
   let index = []
   let deprecatedFiles = []
 
@@ -89,9 +89,9 @@ const dirTree = folderName => {
   fs.readdirSync(folderName)
     // TODO: Remove this .filter step once Rune Games are located on a different CDN
     .filter(
-      fileName => `${folderName}/${fileName}` !== "/github/workspace/game"
+      (fileName) => `${folderName}/${fileName}` !== "/github/workspace/game"
     )
-    .map(fileName => {
+    .map((fileName) => {
       const isDeprecatedFile = deprecatedFiles.indexOf(`${fileName}`) >= 0
       const isIgnoredFile = fileName === "index.json" || fileName[0] === "."
       if (!isIgnoredFile && !isDeprecatedFile) {
