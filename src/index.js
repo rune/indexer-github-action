@@ -89,7 +89,7 @@ const dirTree = folderName => {
   fs.readdirSync(folderName)
     // TODO: Remove this .filter step once Rune Games are located on a different CDN
     .filter(
-      fileName => !`${folderName}/${fileName}`.endsWith("vivid-launchpad/game")
+      fileName => `${folderName}/${fileName}` !== "/github/workspace/game"
     )
     .map(fileName => {
       const isDeprecatedFile = deprecatedFiles.indexOf(`${fileName}`) >= 0
