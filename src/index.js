@@ -86,19 +86,24 @@ const dirTree = folderName => {
     throw "Expected a folder but received a file!"
   }
 
-  fs.readdirSync(folderName).map(fileName => {
-    const isDeprecatedFile = deprecatedFiles.indexOf(`${fileName}`) >= 0
-    const isIgnoredFile = fileName === "index.json" || fileName[0] === "."
-    if (!isIgnoredFile && !isDeprecatedFile) {
-      const file = getFileDetails(`${folderName}/${fileName}`)
-      if (!file.isResponsive) {
-        index.push(file)
-        if (file.type === "folder") {
-          dirTree(`${folderName}/${fileName}`, deprecatedFiles)
+  fs.readdirSync(folderName)
+    // TODO: Remove this .filter step once Rune Games are located on a different CDN
+    .filter(
+      fileName => !`${folderName}/${fileName}`.endsWith("vivid-launchpad/game")
+    )
+    .map(fileName => {
+      const isDeprecatedFile = deprecatedFiles.indexOf(`${fileName}`) >= 0
+      const isIgnoredFile = fileName === "index.json" || fileName[0] === "."
+      if (!isIgnoredFile && !isDeprecatedFile) {
+        const file = getFileDetails(`${folderName}/${fileName}`)
+        if (!file.isResponsive) {
+          index.push(file)
+          if (file.type === "folder") {
+            dirTree(`${folderName}/${fileName}`, deprecatedFiles)
+          }
         }
       }
-    }
-  })
+    })
 
   fs.writeFile(
     `${folderName}/index.json`,
