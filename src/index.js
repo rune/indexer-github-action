@@ -69,7 +69,7 @@ const dirTree = folderName => {
 
   if (fs.existsSync(`${folderName}/${configFileName}`)) {
     try {
-      const config = yaml.safeLoad(
+      const config = yaml.load(
         fs.readFileSync(`${folderName}/${configFileName}`, "utf-8")
       )
       if (config.deprecatedFiles && config.deprecatedFiles.length > 0) {
