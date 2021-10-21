@@ -1,9 +1,9 @@
-FROM node:10-alpine
+FROM node:12-alpine
 
 RUN apk add git
 
 COPY . /
 
-RUN npm install --production
+RUN yarn --production
 
 ENTRYPOINT [ "/src/entrypoint.sh" ]
