@@ -109,8 +109,12 @@ const dirTree = (folderName) => {
     `${folderName}/index.json`,
     JSON.stringify(index, null, 2),
     "utf8",
-    () => {
-      console.log(`Index written for ${folderName}`)
+    (err) => {
+      if (err) {
+        console.err(`Index not written for ${folderName}`, err)
+      } else {
+        console.log(`Index written for ${folderName}`)
+      }
     }
   )
 
