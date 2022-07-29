@@ -9,6 +9,7 @@ node index.js $GITHUB_WORKSPACE
 
 # Commit and push generated indices
 cd $GITHUB_WORKSPACE
+git config --global --add safe.directory $GITHUB_WORKSPACE
 git config --global user.name "${INPUT_CI_USERNAME}"
 git config --global user.email "${INPUT_CI_EMAIL}"
 git add .
